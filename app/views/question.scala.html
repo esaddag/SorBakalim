@@ -1,0 +1,59 @@
+@import java.util.List
+@import dto.{AnswerDTO, QuestionDTO}
+
+@(questionDTO: QuestionDTO, answerDTOs: List[AnswerDTO])
+@main {
+
+    <div class="jumbotron">
+
+
+        <h1>@questionDTO.title</h1>
+
+        <div> Created @questionDTO.createDate by
+            <a href="@routes.UserPostController.usersHome(questionDTO.username)">@questionDTO.username</a>
+        </div>
+
+        <h3>@questionDTO.body</h3>
+
+
+        @if(session.get("username") == questionDTO.username) {
+            <div class="row">
+
+
+                <a href="@routes.QuestionController.deleteQuestion(questionDTO.id)" class="col-md-2 pull-right">
+                    <button type="button" class="btn btn-primary btn-block">Delete</button>
+                </a>
+
+
+                <a href="@routes.QuestionController.editQuestion(questionDTO.id)" class="col-md-2 pull-right">
+                    <button type="button" class="btn btn-primary btn-block">Update</button>
+                </a>
+
+            </div>
+        }
+
+    </div>
+
+    <h2>Answers:</h2>
+
+
+    @for(answerDTO <- answerDTOs) {
+        <div class="well">
+
+            <div> Created @questionDTO.createDate by
+                <a href="@routes.UserPostController.usersHome(answerDTO.username)">@answerDTO.username</a>
+            </div>
+
+
+            <h3>@answerDTO.body</h3>
+
+        </div>
+    }
+
+    @if(session.get("username") != null) {
+
+    <a href="@routes.AnswerController.getAnswerForm(questionDTO.id)" class="col-md-2 pull-right">
+        <button type="button" class="btn btn-primary btn-block">Answer</button>
+    </a>
+}
+}

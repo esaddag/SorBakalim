@@ -1,0 +1,43 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET         /                               controllers.UserPostController.home(page: Int ?= 1)
+
+# Map static resources from the /public folder to the /assets URL path
+GET         /assets/*file                   controllers.Assets.at(path="/public", file)
+
+# Home page of the application, showing blog questions from all users in reversed order of the date of publication
+GET         /userhome                       controllers.UserPostController.home(page: Int ?= 1)
+# Blog page of user :username, showing blog questions from this users in reversed order of the date of publication
+GET         /userhome/:username             controllers.UserPostController.usersHome(username, page: Int ?= 1)
+
+# Present "login" page
+GET         /login                          controllers.UserController.getLoginForm
+# Submit "login" form
+POST        /login                          controllers.UserController.login
+# Logout user
+GET         /logout                         controllers.UserController.logout
+# Present "registration" page
+GET         /register                       controllers.UserController.getRegistrationForm
+# Create new user
+POST        /register                       controllers.UserController.register
+
+# Present "create a question" page
+GET         /question/new                   controllers.QuestionController.getNewQuestionForm
+# Add question page for id of :id
+GET         /question/:id                   controllers.QuestionController.getQuestion(id: Long)
+# Present "edit a question" page
+GET         /question/:id/edit              controllers.QuestionController.getEditQuestionForm(id: Long)
+# Create new question
+POST        /question                       controllers.QuestionController.createQuestion
+# Update question with id of :id
+POST        /question/:id/edit              controllers.QuestionController.editQuestion(id: Long)
+# Deletes question with id of :id
+GET         /question/:id/delete            controllers.QuestionController.deleteQuestion(id: Long)
+
+# Present "leave a answer" page
+GET         /question/:postId/answer        controllers.AnswerController.getAnswerForm(postId: Long)
+# Create new answer
+POST        /question/:postId/answer        controllers.AnswerController.createAnswer(postId: Long)

@@ -1,0 +1,20 @@
+@import dto.QuestionDTO
+@import helper.CSRF
+
+@(questionForm: Form[QuestionDTO], postId: Long)
+
+@main {
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 ">
+                
+                @helper.form(action = CSRF(routes.QuestionController.editQuestion(postId)), 'class -> "form-horizontal") {
+                    @question_form(questionForm)
+
+                <input type="hidden" name="postId" value="@questionForm("createDate").getValue.get()">
+                }
+
+            </div>
+        </div>
+    </div>
+}
